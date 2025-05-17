@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="signIn.css">
-    <title>Log In </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="signIn.css" />
+  <title>Log In</title>
 </head>
 <body>
-    <div class="container">
-        <div class="signin-text">
-            <h1>Sign In</h1><br>
-            <h3>Please Sign-In in your account</h3>
-        </div>
-        <div class="signin-form">
-            <form method="post" action="">
-                <div id="signInMessage" class="messageDiv" style="display: none;"></div>
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="email" placeholder="Enter your Email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" placeholder="Enter your password" id="password">
-                </div>
-                <div class="form-group">
-                    <button class="signin-btn" id="submitsignin" type="submit"> Sign in</button>
-                </div>
-                <h4>Don't have any account? <span><a href="signUp.html">Sign up</a></span></h4>
-            </form>
-        </div>
+  <div class="container">
+    <div class="signin-text">
+      <h1>Sign In</h1>
+      <h3>Please sign in to your account</h3>
     </div>
-    <script type="module" src="firebaseauth.js"></script>
+
+    <div class="signin-form">
+      <form id="loginForm">
+        <!-- Error / status messages will appear here -->
+        <div id="signInMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <button type="submit" id="submitsignin" class="signin-btn">
+            Sign In
+          </button>
+        </div>
+
+        <h4>
+          Don't have an account?
+          <span><a href="signUp.html">Sign up</a></span>
+        </h4>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase + auth logic -->
+  <script type="module" src="firebaseauth.js"></script>
 </body>
 </html>

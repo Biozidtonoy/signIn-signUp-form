@@ -2,7 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
 import {
   getAuth,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword   // ← added this
 } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
 import {
   getFirestore,
@@ -25,71 +26,70 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const db   = getFirestore();
 
-/**
- * Displays a message in the given div ID, then fades it out.
- */
 function showMessage(message, divId) {
   const messageDiv = document.getElementById(divId);
-  if (!messageDiv) {
-    console.error(`No element found with id="${divId}"`);
-    return;
-  }
-  messageDiv.innerText   = message;
+  if (!messageDiv) return;
+  messageDiv.innerText    = message;
   messageDiv.style.display = "block";
   messageDiv.style.opacity = "1";
   setTimeout(() => {
     messageDiv.style.opacity = "0";
-    // hide after fade
     setTimeout(() => (messageDiv.style.display = "none"), 300);
   }, 3000);
 }
 
-document.getElementById("signupForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  // Grab values
-  const fname    = document.getElementById("firstName").value.trim();
-  const lname    = document.getElementById("lastName").value.trim();
-  const email    = document.getElementById("rEmail").value.trim();
-  const password = document.getElementById("rPassword").value;
-
-  try {
-    // 1) Create user in Auth
-    const { user } = await createUserWithEmailAndPassword(auth, email, password);
-
-    // 2) Prepare user data for Firestore
-    const userData = {
-      firstName: fname,
-      lastName:  lname,
-      email:     email
-    };
-
-    // 3) Write to Firestore
-    await setDoc(doc(db, "users", user.uid), userData);
-    console.log("User document written to Firestore");
-
-    // 4) Show success and redirect
-    showMessage("Account created successfully!", "showUpMessage");
-    setTimeout(() => (window.location.href = "index.html"), 1500);
-
-  } catch (error) {
-    // Log the full error for debugging
-    console.error("Signup or Firestore error:", error.code, error.message);
-
-    // Handle specific Auth errors
-    if (error.code === "auth/email-already-in-use") {
-      showMessage("That email is already in use.", "signUpMessage");
-    } else if (error.code === "auth/invalid-email") {
-      showMessage("Invalid email address.", "signUpMessage");
-    } else if (error.code === "auth/weak-password") {
-      showMessage("Password should be at least 6 characters.", "signUpMessage");
-    } else if (error.code.startsWith("permission-denied")) {
-      // Firestore permissions
-      showMessage("Permission denied: check your Firestore rules.", "signUpMessage");
-    } else {
-      // Fallback for any other error (including Firestore writes)
-      showMessage("Error: " + error.message, "signUpMessage");
+// ——— SIGN UP (on signUp.html) ———
+const signupForm = document.getElementById("signupForm");
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fname    = document.getElementById("firstName").value.trim();
+    const lname    = document.getElementById("lastName").value.trim();
+    const email    = document.getElementById("rEmail").value.trim();
+    const password = document.getElementById("rPassword").value;
+    try {
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      const userData = { firstName: fname, lastName: lname, email };
+      await setDoc(doc(db, "users", user.uid), userData);
+      showMessage("Account created successfully!", "showUpMessage");
+      setTimeout(() => (window.location.href = "index.html"), 1500);
+    } catch (error) {
+      console.error("Signup error:", error.code, error.message);
+      if (error.code === "auth/email-already-in-use") {
+        showMessage("That email is already in use.", "signUpMessage");
+      } else if (error.code === "auth/invalid-email") {
+        showMessage("Invalid email address.", "signUpMessage");
+      } else if (error.code === "auth/weak-password") {
+        showMessage("Password should be at least 6 characters.", "signUpMessage");
+      } else {
+        showMessage("Error: " + error.message, "signUpMessage");
+      }
     }
-  }
-});
+  });
+}
 
+// ——— SIGN IN (on index.html) ———
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email    = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Sign‑in successful:", user.email);
+      window.location.href = "dashboard.html";  // ← redirect on success
+    } catch (error) {
+      console.error("Sign‑in error:", error.code, error.message);
+      let msg = "Unable to log in.";
+      if (error.code === "auth/user-not-found") {
+        msg = "No account found with this email.";
+      } else if (error.code === "auth/wrong-password") {
+        msg = "Incorrect password.";
+      } else if (error.code === "auth/invalid-email") {
+        msg = "Invalid email address.";
+      }
+      showMessage(msg, "signInMessage");  // ← use the correct div ID
+    }
+  });
+}

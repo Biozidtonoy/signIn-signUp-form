@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="signUp.css">
-    <title>sign up </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="signUp.css" />
+  <title>Sign Up</title>
 </head>
 <body>
-    <form class="signup-form" method="post" action="">
-        <!-- For error messages -->
-      <div id="signUpMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
-      <!-- For success messages -->
-      <div id="showUpMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
-        <h2>Create Account</h2>
-    
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" placeholder="Enter your first name" required>
-        </div>
-    
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" placeholder="Enter your last name" required>
-        </div>
-    
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="rEmail" placeholder="Enter your email" required>
-        </div>
-    
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="rPassword" placeholder="Enter a password" required>
-        </div>
-    
-        <button id="submit" type="submit">Sign Up</button>
-        <h4>already have an acount? <span><a href="index.html">log in</a></span></h4>
-      </form>
-      <script type="module" src="firebaseauth.js"></script>   
+  <form class="signup-form" id="signupForm">
+    <!-- For error messages -->
+    <div id="signUpMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
+    <!-- For success messages -->
+    <div id="showUpMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
+
+    <h2>Create Account</h2>
+
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" placeholder="Enter your first name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" placeholder="Enter your last name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="rEmail">Email Address</label>
+      <input type="email" id="rEmail" placeholder="Enter your email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="rPassword">Password</label>
+      <input type="password" id="rPassword" placeholder="Enter a password" required />
+    </div>
+
+    <button id="submit" type="submit">Sign Up</button>
+    <h4>
+      Already have an account? 
+      <span><a href="index.html">Log in</a></span>
+    </h4>
+  </form>
+
+  <!-- Load your Firebase + auth code -->
+  <script type="module" src="firebaseauth.js"></script>
 </body>
 </html>
