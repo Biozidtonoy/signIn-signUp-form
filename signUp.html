@@ -17,25 +17,56 @@
 
     <div class="form-group">
       <label for="firstName">First Name</label>
-      <input type="text" id="firstName" placeholder="Enter your first name" required />
+      <input 
+        type="text" 
+        id="firstName" 
+        placeholder="Enter your first name" 
+        required 
+      />
     </div>
 
     <div class="form-group">
       <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" placeholder="Enter your last name" required />
+      <input 
+        type="text" 
+        id="lastName" 
+        placeholder="Enter your last name" 
+        required 
+      />
     </div>
 
     <div class="form-group">
       <label for="rEmail">Email Address</label>
-      <input type="email" id="rEmail" placeholder="Enter your email" required />
+      <input 
+        type="email" 
+        id="rEmail" 
+        placeholder="Enter your university email" 
+        required 
+      />
+      <small class="hint">Only <code>@iub.edu.bd</code> email addresses are allowed.</small>
     </div>
 
     <div class="form-group">
       <label for="rPassword">Password</label>
-      <input type="password" id="rPassword" placeholder="Enter a password" required />
+      <input 
+        type="password" 
+        id="rPassword" 
+        placeholder="Enter a password" 
+        required 
+      />
     </div>
 
     <button id="submit" type="submit">Sign Up</button>
+
+    <!-- Resend verification link (hidden by default; show via JS after signup) -->
+    <button 
+      type="button" 
+      id="resendVerification" 
+      style="display: none; margin-top: 10px;"
+    >
+      Resend Verification Email
+    </button>
+
     <h4>
       Already have an account? 
       <span><a href="index.html">Log in</a></span>

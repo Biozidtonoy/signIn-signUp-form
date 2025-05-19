@@ -15,8 +15,10 @@
 
     <div class="signin-form">
       <form id="loginForm">
-        <!-- Error / status messages will appear here -->
+        <!-- Sign‑in error/status messages -->
         <div id="signInMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
+        <!-- Password‑reset status messages -->
+        <div id="resetPasswordMessage" class="messageDiv" style="display: none; transition: opacity 0.3s;"></div>
 
         <div class="form-group">
           <label for="email">Email</label>
@@ -42,6 +44,11 @@
           <button type="submit" id="submitsignin" class="signin-btn">
             Sign In
           </button>
+        </div>
+
+        <!-- Forgot password link -->
+        <div class="form-group">
+          <a href="#" id="forgotPassword">Forgot password?</a>
         </div>
 
         <h4>
